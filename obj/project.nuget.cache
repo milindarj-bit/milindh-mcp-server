@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3FOkXRkLjMo=",
+  "dgSpecHash": "tKz11kFzhMM=",
   "success": true,
-  "projectFilePath": "/build/myapp/myapp.csproj",
+  "projectFilePath": "/home/user/milindh-mcp-server/myapp.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
