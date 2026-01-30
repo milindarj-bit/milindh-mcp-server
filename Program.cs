@@ -24,7 +24,12 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "3000";
+app.MapControllerRoute(
+    name: "sse",
+    pattern: "sse/stream",
+    defaults: new { controller = "Sse", action = "Stream" });
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 var url = $"http://0.0.0.0:{port}";
 
 app.Run(url);

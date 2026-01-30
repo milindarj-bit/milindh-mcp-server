@@ -30,3 +30,4 @@
 /home/user/milindh-mcp-server/obj/Debug/net9.0/myapp.RazorAssemblyInfo.cs
 /home/user/milindh-mcp-server/bin/Debug/net9.0/myapp.staticwebassets.runtime.json
 /home/user/milindh-mcp-server/obj/Debug/net9.0/compressed/srsdvfsejk-wztv7ezsur.gz
+/home/user/milindh-mcp-server/obj/Debug/net9.0/myapp.sourcelink.json
