@@ -1,46 +1,53 @@
-@model List<myapp.Models.CartItem>
+@model IEnumerable<myapp.Models.CartItem>
 
-@{ ViewData["Title"] = "Shopping Cart"; }
+@inject Microsoft.AspNetCore.Identity.SignInManager<myapp.Models.ApplicationUser> SignInManager
 
-<div class="container mt-5">
-    <h2>Your Shopping Cart</h2>
+@{
+    ViewData["Title"] = "Your Cart";
+}
 
-    @if (Model.Count == 0)
-    {
-        <p>Your cart is empty.</p>
-    }
-    else
-    {
-        <table class="table">
-            <thead>
+<h2>Your Cart</h2>
+
+@if (Model.Any())
+{
+    decimal total = 0;
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var subtotal = item.Quantity * item.Price;
                 <tr>
-                    <th>Item</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
+                    <td>@item.Biryani.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>₹@item.Price.ToString("0.00")</td>
+                    <td>₹@subtotal.ToString("0.00")</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>₹@item.Price</td>
-                        <td>@item.Quantity</td>
-                        <td>₹@item.Total</td>
-                    </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3" class="text-right"><strong>Total:</strong></td>
-                    <td><strong>₹@Model.Sum(item => item.Total)</strong></td>
-                </tr>
-            </tfoot>
-        </table>
-
-        <div class="text-right">
-            <a href="/Cart/Checkout" class="btn btn-primary">Checkout</a>
-        </div>
-    }
-</div>
+                total += subtotal;
+            }
+        </tbody>
+    </table>
+    <div class="text-right">
+        <h4>Total: ₹@total.ToString("0.00")</h4>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a asp-controller="Cart" asp-action="Checkout" class="btn btn-primary">Checkout</a>
+        }
+        else
+        {
+            <p>You must be logged in to check out.</p>
+            <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Index", "Cart")" class="btn btn-primary">Login to Checkout</a>
+        }
+    </div>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}

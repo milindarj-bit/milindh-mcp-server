@@ -2,9 +2,8 @@ namespace myapp.Models
 {
     public class CartItem
     {
-        public string Name { get; set; } = "";
-        public decimal Price { get; set; }
+        public Biryani Biryani { get; set; }
         public int Quantity { get; set; }
-        public decimal Total => Price * Quantity;
+        public decimal Price { get; set; }
     }
 }

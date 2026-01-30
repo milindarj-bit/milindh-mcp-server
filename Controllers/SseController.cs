@@ -35,13 +35,13 @@ namespace myapp.Controllers
                 }
 
                 // Keep the connection open after the list is sent
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(15), cancellationToken);
-                    var heartbeatMessage = ": heartbeat\n\n";
-                    await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes(heartbeatMessage), cancellationToken);
-                    await Response.Body.FlushAsync(cancellationToken);
-                }
+                // while (!cancellationToken.IsCancellationRequested)
+                // {
+                //     await Task.Delay(TimeSpan.FromSeconds(15), cancellationToken);
+                //     var heartbeatMessage = ": heartbeat\n\n";
+                //     await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes(heartbeatMessage), cancellationToken);
+                //     await Response.Body.FlushAsync(cancellationToken);
+                // }
             }
             catch (OperationCanceledException)
             {

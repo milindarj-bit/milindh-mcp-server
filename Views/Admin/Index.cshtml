@@ -1,0 +1,70 @@
+@model IEnumerable<myapp.Models.Biryani>
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2>Admin Dashboard</h2>
+
+<h3>Manage Biryanis</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<h3>Add New Biryani</h3>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label for="Name" class="control-label">Name</label>
+        <input name="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Price" class="control-label">Price</label>
+        <input name="Price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Description" class="control-label">Description</label>
+        <input name="Description" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="ImageUrl" class="control-label">Image URL</label>
+        <input name="ImageUrl" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
