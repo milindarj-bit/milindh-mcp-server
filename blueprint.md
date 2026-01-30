@@ -1,43 +1,41 @@
+
 # Project Blueprint
 
 ## 1. Overview
 
-This project is a real-time web application built on ASP.NET Core. Its primary capability is to stream data from the server to the client in real-time using Server-Sent Events (SSE). It's designed to be a simple, robust foundation for building more complex real-time features.
+This project is a modern, full-stack e-commerce web application for a "Biryani Shop." It is built with .NET and is designed to provide a seamless and visually appealing user experience. The application allows users to browse a menu of biryanis, add them to a shopping cart, and proceed to checkout.
 
-## 2. Project Outline
+## 2. Style, Design, and Features
 
-### Technology Stack
+### 2.1. Aesthetics & Design
 
-*   **Backend:** C# with ASP.NET Core
-*   **Real-time Protocol:** Server-Sent Events (SSE)
+*   **Modern & Clean UI**: The application features a visually balanced layout with clean spacing and polished styles, creating a unique and intuitive user experience.
+*   **Responsive Design**: The app is fully mobile-responsive, adapting to different screen sizes to work perfectly on both mobile devices and desktops.
+*   **Engaging Visuals**: The site uses a hero section with a compelling headline and a call-to-action to draw users in. The menu is presented in a clear and organized manner.
+*   **Consistent Branding**: The "Biryani Shop" brand is consistently applied across all pages, with a simple and elegant navigation bar.
 
-### Features & Functionality
+### 2.2. Features
 
-*   **SSE Endpoint:** A dedicated controller (`SseController`) provides an event stream at the `/sse/stream` URL.
-*   **Real-time Data Stream:**
-    1.  Upon connection, the server waits for 2 seconds.
-    2.  It sends an initial series of data messages: "Starting up...", "Almost there...", and "Ready!".
-    3.  After the initial messages, the server sends a heartbeat comment (`: heartbeat`) every 15 seconds to keep the connection alive.
-*   **Hosting:** The application is configured to run on `http://0.0.0.0:8081` to avoid conflicts with the development environment's default port.
+*   **Homepage**: A welcoming hero section that introduces the user to the Biryani Shop.
+*   **Menu**: A section on the homepage that displays the available biryanis.
+*   **Shopping Cart**:
+    *   Users can add items to their cart directly from the menu.
+    *   A dedicated cart page displays the selected items, quantities, and total price.
+    *   The cart data is stored in the user's session.
+*   **Checkout**:
+    *   A simple checkout process that clears the cart and displays a confirmation message.
+*   **Real-time Updates (SSE)**:
+    *   The application includes a Server-Sent Events (SSE) endpoint at `/sse/stream` that streams a list of biryanis in real-time. This can be used for features like real-time order tracking or live menu updates in the future.
 
-### Design & Style
+## 3. Current Plan: E-commerce Functionality
 
-*   Currently, the project is backend-focused. No specific frontend design or styling has been implemented.
+This plan outlines the steps to add e-commerce features to the Biryani Shop website.
 
-## 3. Current Plan: Create a Frontend for SSE Visualization
-
-The backend is now stable and correctly streaming data. The next step is to create a user interface to consume and display this data.
-
-### Goal
-
-Build a simple, clean web page that connects to the SSE endpoint and displays the messages received from the server in real-time.
-
-### Action Steps
-
-1.  **Create `index.html`:** An HTML file will be created in the `wwwroot` directory to serve as the application's user interface.
-2.  **Add JavaScript for EventSource:** A `<script>` tag will be added to `index.html` containing JavaScript to:
-    *   Instantiate an `EventSource` object pointing to the `/sse/stream` endpoint.
-    *   Listen for the `message` event.
-    *   Append the received data to a list on the page.
-3.  **Update `Program.cs`:** Configure the application to serve `index.html` as the default file for the root URL (`/`).
-4.  **Basic Styling:** Apply simple CSS to ensure the displayed messages are clear, readable, and have a visually appealing layout.
+*   **Step 1: Create `blueprint.md`**: Create this file to document the project's features and the current plan.
+*   **Step 2: Update `Views/Shared/_Layout.cshtml`**: Add a navigation bar with links to "Home" and "Cart".
+*   **Step 3: Update `Views/Home/Index.cshtml`**: Add "Add to Cart" buttons to the menu items.
+*   **Step 4: Create `Controllers/CartController.cs`**: Implement the backend logic for the shopping cart and checkout.
+*   **Step 5: Create `Views/Cart/Index.cshtml`**: Create the view for the shopping cart page.
+*   **Step 6: Create `Views/Cart/Checkout.cshtml`**: Create the view for the checkout confirmation page.
+*   **Step 7: Update `Program.cs`**: Add session support to the application.
+*   **Step 8: Update `wwwroot/css/site.css`**: Add styling for the new e-commerce components.

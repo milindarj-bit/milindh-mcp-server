@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,31 +15,32 @@ namespace myapp.Controllers
             Response.Headers.Append("Cache-Control", "no-cache");
             Response.Headers.Append("Connection", "keep-alive");
 
-            await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken); // Initial delay
+            var biryanis = new List<string>
+            {
+                "Chicken Biryani",
+                "Mutton Biryani",
+                "Vegetable Biryani"
+            };
 
             try
             {
-                // Send initial data messages
-                await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes("data: Starting up...\n\n"), cancellationToken);
-                await Response.Body.FlushAsync(cancellationToken);
-                await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
+                foreach (var biryani in biryanis)
+                {
+                    if (cancellationToken.IsCancellationRequested) break;
 
-                await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes("data: Almost there...\n\n"), cancellationToken);
-                await Response.Body.FlushAsync(cancellationToken);
-                await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+                    var message = $"data: {biryani}\n\n";
+                    await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes(message), cancellationToken);
+                    await Response.Body.FlushAsync(cancellationToken);
+                    await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
+                }
 
-                await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes("data: Ready!\n\n"), cancellationToken);
-                await Response.Body.FlushAsync(cancellationToken);
-
-                // Start the heartbeat loop
-                var heartbeatMessage = ": heartbeat\n\n";
-                var heartbeatDelay = TimeSpan.FromSeconds(15);
-
+                // Keep the connection open after the list is sent
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    await Task.Delay(TimeSpan.FromSeconds(15), cancellationToken);
+                    var heartbeatMessage = ": heartbeat\n\n";
                     await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes(heartbeatMessage), cancellationToken);
                     await Response.Body.FlushAsync(cancellationToken);
-                    await Task.Delay(heartbeatDelay, cancellationToken);
                 }
             }
             catch (OperationCanceledException)

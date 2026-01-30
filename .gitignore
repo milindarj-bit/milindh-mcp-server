@@ -1,39 +1,29 @@
-# Default .NET Core gitignore file
-
-## Visual Studio / Rider
-.vs/
-.idea/
-
-## Build results
-[Bb]in/
-[Oo]bj/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 ## User-specific files
-*.user
+*.rsuser
 *.suo
+*.user
+*.userosscache
+*.sln.docstates
 
-## Other
-*.DS_Store
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
 
-# Keep the wwwroot folder, but ignore its contents
-# unless they are explicitly added.
-# This is useful for projects where wwwroot contains
-# both checked-in assets and build artifacts.
-/wwwroot/*
-!/wwwroot/index.html
+## VS Code files
+.vscode/
 
-# Ignore JetBrains Rider files
+## Rider files
 .idea/
-
-# Ignore local development settings
-appsettings.Development.json
-
-# NuGet packages
-packages/
-*.nupkg
-
-# Folders for Test Projects
-**/TestResults/
-
-# Log files
-*.log

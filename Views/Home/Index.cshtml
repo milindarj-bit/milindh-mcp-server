@@ -12,17 +12,32 @@
         <div class="menu-item">
             <img src="~/images/chicken-biryani.jpg" alt="Chicken Biryani">
             <h3>Chicken Biryani</h3>
+            <p class="price">₹450</p>
             <p>A classic and aromatic dish with tender chicken pieces cooked with basmati rice and a blend of spices.</p>
+            <form method="post" action="/Cart/AddToCart">
+                <input type="hidden" name="name" value="Chicken Biryani" />
+                <button type="submit" class="btn">Add to Cart</button>
+            </form>
         </div>
         <div class="menu-item">
             <img src="~/images/mutton-biryani.jpg" alt="Mutton Biryani">
             <h3>Mutton Biryani</h3>
+            <p class="price">₹550</p>
             <p>A rich and flavorful Biryani with succulent mutton pieces that melt in your mouth.</p>
+            <form method="post" action="/Cart/AddToCart">
+                <input type="hidden" name="name" value="Mutton Biryani" />
+                <button type="submit" class="btn">Add to Cart</button>
+            </form>
         </div>
         <div class="menu-item">
             <img src="~/images/veg-biryani.jpg" alt="Veg Biryani">
             <h3>Vegetable Biryani</h3>
+            <p class="price">₹350</p>
             <p>A delightful and healthy option with a mix of fresh vegetables and aromatic spices.</p>
+            <form method="post" action="/Cart/AddToCart">
+                <input type="hidden" name="name" value="Vegetable Biryani" />
+                <button type="submit" class="btn">Add to Cart</button>
+            </form>
         </div>
     </div>
 </section>
