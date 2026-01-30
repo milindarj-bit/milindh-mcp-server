@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading;
@@ -15,21 +14,36 @@ namespace myapp.Controllers
             Response.Headers.Append("Cache-Control", "no-cache");
             Response.Headers.Append("Connection", "keep-alive");
 
-            var i = 0;
+            await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken); // Initial delay
 
-            while (!cancellationToken.IsCancellationRequested)
+            try
             {
-                try
+                // Send initial data messages
+                await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes("data: Starting up...\n\n"), cancellationToken);
+                await Response.Body.FlushAsync(cancellationToken);
+                await Task.Delay(TimeSpan.FromSeconds(2), cancellationToken);
+
+                await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes("data: Almost there...\n\n"), cancellationToken);
+                await Response.Body.FlushAsync(cancellationToken);
+                await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+
+                await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes("data: Ready!\n\n"), cancellationToken);
+                await Response.Body.FlushAsync(cancellationToken);
+
+                // Start the heartbeat loop
+                var heartbeatMessage = ": heartbeat\n\n";
+                var heartbeatDelay = TimeSpan.FromSeconds(15);
+
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    var message = $"data: Message {i++} at {DateTime.Now}\n\n";
-                    await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes(message), cancellationToken);
+                    await Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes(heartbeatMessage), cancellationToken);
                     await Response.Body.FlushAsync(cancellationToken);
-                    await Task.Delay(1000, cancellationToken);
+                    await Task.Delay(heartbeatDelay, cancellationToken);
                 }
-                catch (OperationCanceledException)
-                {
-                    break;
-                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Client disconnected, no action needed
             }
         }
     }

@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets/images/veg-biryani.jpg"
     },
     {
+      "Id": "/home/user/milindh-mcp-server/wwwroot/index.html",
+      "PackagePath": "staticwebassets/index.html"
+    },
+    {
       "Id": "obj/Debug/net9.0/staticwebassets/msbuild.build.myapp.props",
       "PackagePath": "build\\myapp.props"
     },

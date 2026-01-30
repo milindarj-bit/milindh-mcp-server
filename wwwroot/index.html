@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Stream</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1c1c1e;
+        }
+
+        #messages {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e5e5e5;
+            border-radius: 0.25rem;
+            padding: 1rem;
+        }
+
+        #messages li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        #messages li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Server-Sent Events Stream</h1>
+        <ul id="messages"></ul>
+    </div>
+
+    <script>
+        const messages = document.getElementById('messages');
+        const eventSource = new EventSource('/sse/stream');
+
+        eventSource.onmessage = function (event) {
+            const newLi = document.createElement('li');
+            newLi.textContent = `Message: ${event.data}`;
+            messages.appendChild(newLi);
+            messages.scrollTop = messages.scrollHeight; // Auto-scroll to bottom
+        };
+
+        eventSource.onerror = function (err) {
+            console.error("EventSource failed:", err);
+            const newLi = document.createElement('li');
+            newLi.textContent = 'Connection to server lost.';
+            newLi.style.color = 'red';
+            messages.appendChild(newLi);
+            eventSource.close();
+        };
+    </script>
+</body>
+</html>

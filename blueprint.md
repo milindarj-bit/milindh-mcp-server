@@ -1,42 +1,43 @@
-# Biryani Shop Web Application Blueprint
+# Project Blueprint
 
 ## 1. Overview
 
-This project is a web application for a Biryani shop. It will allow users to browse the menu, view details about different Biryani dishes, and potentially place orders in the future. The application is built using ASP.NET Core with the MVC (Model-View-Controller) pattern.
+This project is a real-time web application built on ASP.NET Core. Its primary capability is to stream data from the server to the client in real-time using Server-Sent Events (SSE). It's designed to be a simple, robust foundation for building more complex real-time features.
 
-## 2. Style, Design, and Features
+## 2. Project Outline
 
-### 2.1. Initial Version
+### Technology Stack
 
-*   **Technology Stack:** ASP.NET Core, C#, Razor Views, HTML, CSS.
-*   **Architecture:** MVC (Model-View-Controller).
-*   **Landing Page:** A simple and elegant landing page with:
-    *   A prominent hero section with a catchy headline and a call-to-action button.
-    *   A section to showcase different types of Biryani.
-    *   A basic footer with contact information.
-*   **Styling:**
-    *   **Font:** A modern and readable font.
-    *   **Color Palette:** A warm and inviting color scheme inspired by Indian cuisine (e.g., shades of orange, brown, and gold).
-    *   **Layout:** A clean and responsive layout that works on both desktop and mobile devices.
+*   **Backend:** C# with ASP.NET Core
+*   **Real-time Protocol:** Server-Sent Events (SSE)
 
-## 3. Current Request: Create a web server for a Biryani shop
+### Features & Functionality
 
-### 3.1. Plan
+*   **SSE Endpoint:** A dedicated controller (`SseController`) provides an event stream at the `/sse/stream` URL.
+*   **Real-time Data Stream:**
+    1.  Upon connection, the server waits for 2 seconds.
+    2.  It sends an initial series of data messages: "Starting up...", "Almost there...", and "Ready!".
+    3.  After the initial messages, the server sends a heartbeat comment (`: heartbeat`) every 15 seconds to keep the connection alive.
+*   **Hosting:** The application is configured to run on `http://0.0.0.0:8081` to avoid conflicts with the development environment's default port.
 
-1.  **Project Setup:**
-    *   Create the folder structure for a standard MVC application: `Controllers`, `Models`, `Views`, and `wwwroot`.
-    *   Create subfolders within `Views` for `Home` and `Shared`.
-    *   Create subfolders within `wwwroot` for `css`, `js`, and `images`.
-2.  **Create the Main Layout:**
-    *   Create a `_Layout.cshtml` file in `Views/Shared` to define the common structure of all pages (header, footer, navigation).
-3.  **Create the Home Page:**
-    *   Create a `HomeController.cs` with an `Index` action method.
-    *   Create an `Index.cshtml` view in `Views/Home` for the landing page.
-    *   Create a `_ViewStart.cshtml` file in `Views` to specify the default layout.
-4.  **Add Styling:**
-    *   Create a `site.css` file in `wwwroot/css` to add custom styles for the Biryani shop theme.
-5.  **Update `Program.cs`:**
-    *   Configure the application to use MVC with controllers and views.
-    *   Enable serving static files from the `wwwroot` directory.
-6.  **Create placeholder image files.**
-7.  **Create `blueprint.md` file.**
+### Design & Style
+
+*   Currently, the project is backend-focused. No specific frontend design or styling has been implemented.
+
+## 3. Current Plan: Create a Frontend for SSE Visualization
+
+The backend is now stable and correctly streaming data. The next step is to create a user interface to consume and display this data.
+
+### Goal
+
+Build a simple, clean web page that connects to the SSE endpoint and displays the messages received from the server in real-time.
+
+### Action Steps
+
+1.  **Create `index.html`:** An HTML file will be created in the `wwwroot` directory to serve as the application's user interface.
+2.  **Add JavaScript for EventSource:** A `<script>` tag will be added to `index.html` containing JavaScript to:
+    *   Instantiate an `EventSource` object pointing to the `/sse/stream` endpoint.
+    *   Listen for the `message` event.
+    *   Append the received data to a list on the page.
+3.  **Update `Program.cs`:** Configure the application to serve `index.html` as the default file for the root URL (`/`).
+4.  **Basic Styling:** Apply simple CSS to ensure the displayed messages are clear, readable, and have a visually appealing layout.
